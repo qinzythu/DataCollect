@@ -81,7 +81,7 @@ class WeiboLogin(object):
         }
         if 'showpin' in prelogin_args.keys():
             if prelogin_args['showpin'] == 1:
-                pin_url = 'https://login.sina.com.cn/cgi/pin.php?r=%s&s=0&p=%s' % (int(time.time()), prelogin_args["pcid"])
+                pin_url = 'https://login.sina.com.cn/cgi/pin.php?r=%s&s=0&p=%s' % (int(time.time()*1000), prelogin_args["pcid"])
                 try:
                     pic = self.session.get(pin_url).content
                 except Exception as excep:
@@ -108,7 +108,7 @@ class WeiboLogin(object):
         else:
             self.sp = self.get_sp(self.prelogin_args["servertime"], self.prelogin_args["nonce"], self.prelogin_args["pubkey"])
             self.postdata = self.get_postdata(self.su,self.sp,self.prelogin_args)
-            login_url = 'http://login.sina.com.cn/sso/login.php?client=ssologin.js(v1.4.19)&_=%d' % int(time.time())
+            login_url = 'http://login.sina.com.cn/sso/login.php?client=ssologin.js(v1.4.19)&_=%d' % int(time.time()*1000)
             try:
                 login_page = self.session.post(login_url, data=self.postdata)
             except Exception as excep:
