@@ -40,7 +40,7 @@ class WeiboLogin(object):
             "_": int(time.time()*1000),
         }
         try:
-            response = self.session.get("http://login.sina.com.cn/sso/prelogin.php", params=params)
+            response = self.session.get("https://login.sina.com.cn/sso/prelogin.php", params=params)
             prelogin_args = json.loads(re.search(r"\((?P<data>.*)\)", response.text).group("data"))
         except Exception as excep:
             prelogin_args = {}
@@ -108,7 +108,7 @@ class WeiboLogin(object):
         else:
             self.sp = self.get_sp(self.prelogin_args["servertime"], self.prelogin_args["nonce"], self.prelogin_args["pubkey"])
             self.postdata = self.get_postdata(self.su,self.sp,self.prelogin_args)
-            login_url = 'http://login.sina.com.cn/sso/login.php?client=ssologin.js(v1.4.19)&_=%d' % int(time.time()*1000)
+            login_url = 'http://login.sina.com.cn/sso/login.php?client=ssologin.js(v1.4.19)'
             try:
                 login_page = self.session.post(login_url, data=self.postdata)
             except Exception as excep:
